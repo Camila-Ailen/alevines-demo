@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,59 +8,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Calculator, Fish, Wrench, BookOpen, ArrowRight } from "lucide-react"
 import Link from "next/link"
-
-// Datos de materiales y costos
-const estanqueData = [
-  { id: 1, name: "cano", detail: "6 mm", price: 6000, cant: 3 },
-  { id: 2, name: "codo", detail: "", price: 15200, cant: 3 },
-  { id: 3, name: "cano T", detail: "", price: 2000, cant: 3 },
-  { id: 4, name: "maquina", detail: "Mano de obra subsidiada", price: 120000, cant: 20 },
-  { id: 5, name: "alevines", detail: "peces para recria", price: 200, cant: 400 },
-]
-
-// Medidas estándar de estanques
-const medidasEstandar = {
-  largo: 50, // metros
-  ancho: 20, // metros
-  profundidad: 2, // metros
-  volumen: 100, // metros cúbicos
-}
-
-// Tipos de peces y sus requerimientos
-const tiposPeces = {
-  carpa: { densidad: 5, costoExtra: 0, descripcion: "Resistente, crecimiento rápido" },
-  pacu: { densidad: 3, costoExtra: 1000, descripcion: "Mayor valor comercial, requiere más cuidado" },
-  ambos: { densidad: 4, costoExtra: 500, descripcion: "Diversificación de producción" },
-}
+import { useEstanqueStore, medidasEstandar, tiposPeces, getEstanqueDataForCalculation } from "@/lib/store"
 
 export default function Dashboard() {
-  const [cantidadEstanques, setCantidadEstanques] = useState<number>(1)
-  const [tipoPeces, setTipoPeces] = useState<string>("")
-  const [mostrarCalculos, setMostrarCalculos] = useState(false)
-
-  const calcularCostos = () => {
-    if (!tipoPeces) return null
-
-    const costoMateriales = estanqueData.reduce((total, item) => {
-      return total + item.price * item.cant * cantidadEstanques
-    }, 0)
-
-    const costoTipoPeces = tiposPeces[tipoPeces as keyof typeof tiposPeces].costoExtra * cantidadEstanques
-    const costoTotal = costoMateriales + costoTipoPeces
-
-    return {
-      materiales: costoMateriales,
-      tipoPeces: costoTipoPeces,
-      total: costoTotal,
-      porEstanque: costoTotal / cantidadEstanques,
-    }
-  }
-
-  const costos = calcularCostos()
+  const {
+    cantidadEstanques,
+    tipoPeces,
+    mostrarCalculos,
+    costos,
+    setCantidadEstanques,
+    setTipoPeces,
+    calcularCostos,
+    resetCalculos,
+  } = useEstanqueStore()
 
   const handleCalcular = () => {
     if (tipoPeces) {
-      setMostrarCalculos(true)
+      calcularCostos()
     }
   }
 
@@ -86,7 +49,7 @@ export default function Dashboard() {
             Calculadora
           </Button>
           <Link href="/tutorial">
-            <Button variant="outline" className="flex items-center gap-2 bg-transparent">
+            <Button variant="outline" className="flex items-center gap-2 bg-white hover:bg-gray-50">
               <BookOpen className="h-4 w-4" />
               Tutorial
             </Button>
@@ -117,8 +80,8 @@ export default function Dashboard() {
                 <div className="text-sm text-gray-600">Profundidad</div>
               </div>
               <div className="text-center p-4 bg-purple-50 rounded-lg">
-                <div className="text-2xl font-bold text-purple-600">{medidasEstandar.volumen}m³</div>
-                <div className="text-sm text-gray-600">Volumen</div>
+                <div className="text-2xl font-bold text-purple-600">{medidasEstandar.area}m²</div>
+                <div className="text-sm text-gray-600">Área</div>
               </div>
             </div>
           </CardContent>
@@ -147,26 +110,20 @@ export default function Dashboard() {
               <div className="space-y-2">
                 <Label htmlFor="tipo-peces">Tipo de Peces</Label>
                 <Select value={tipoPeces} onValueChange={setTipoPeces}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-gray-300 hover:bg-gray-50">
                     <SelectValue placeholder="Selecciona el tipo de peces" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="carpa">
+                  <SelectContent className="bg-white border border-gray-200 shadow-lg">
+                    <SelectItem value="carpa" className="hover:bg-gray-50">
                       <div className="flex flex-col">
                         <span>Carpa</span>
                         <span className="text-xs text-gray-500">Resistente, crecimiento rápido</span>
                       </div>
                     </SelectItem>
-                    <SelectItem value="pacu">
+                    <SelectItem value="pacu" className="hover:bg-gray-50">
                       <div className="flex flex-col">
                         <span>Pacu</span>
                         <span className="text-xs text-gray-500">Mayor valor comercial</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="ambos">
-                      <div className="flex flex-col">
-                        <span>Ambos (Carpa + Pacu)</span>
-                        <span className="text-xs text-gray-500">Diversificación</span>
                       </div>
                     </SelectItem>
                   </SelectContent>
@@ -182,15 +139,22 @@ export default function Dashboard() {
                     {tiposPeces[tipoPeces as keyof typeof tiposPeces].descripcion}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
-                    Densidad recomendada: {tiposPeces[tipoPeces as keyof typeof tiposPeces].densidad} peces/m³
+                    Densidad recomendada: {tiposPeces[tipoPeces as keyof typeof tiposPeces].densidad}
                   </p>
                 </div>
               )}
 
-              <Button onClick={handleCalcular} className="w-full" disabled={!tipoPeces}>
-                <Calculator className="h-4 w-4 mr-2" />
-                Calcular Costos
-              </Button>
+              <div className="flex gap-2">
+                <Button onClick={handleCalcular} className="flex-1" disabled={!tipoPeces}>
+                  <Calculator className="h-4 w-4 mr-2" />
+                  Calcular Costos
+                </Button>
+                {mostrarCalculos && (
+                  <Button onClick={resetCalculos} variant="outline" className="bg-white hover:bg-gray-50">
+                    Limpiar
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
 
@@ -210,10 +174,12 @@ export default function Dashboard() {
                     <span className="font-bold">${costos.materiales.toLocaleString()}</span>
                   </div>
 
+                  {/*
                   <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                    <span className="font-medium">Costo por Tipo de Peces</span>
+                    <span className="font-medium">Costo de Peces</span>
                     <span className="font-bold">${costos.tipoPeces.toLocaleString()}</span>
                   </div>
+                  */}
 
                   <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border-2 border-green-200">
                     <span className="font-bold text-lg">Total del Proyecto</span>
@@ -227,7 +193,7 @@ export default function Dashboard() {
                 </div>
 
                 <Link href="/tutorial">
-                  <Button variant="outline" className="w-full bg-transparent">
+                  <Button variant="outline" className="w-full bg-white hover:bg-gray-50">
                     <BookOpen className="h-4 w-4 mr-2" />
                     Ver Tutorial de Construcción
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -262,7 +228,7 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {estanqueData.map((item) => (
+                    {getEstanqueDataForCalculation(tipoPeces).map((item) => (
                       <tr key={item.id} className="border-b">
                         <td className="p-2 font-medium">{item.name}</td>
                         <td className="p-2 text-gray-600">{item.detail}</td>
