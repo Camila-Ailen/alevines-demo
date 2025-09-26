@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Calculator, Fish, Wrench, BookOpen, ArrowRight } from "lucide-react"
+import { Calculator, Fish, Wrench, BookOpen, ArrowRight, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { useEstanqueStore, medidasEstandar, tiposPeces, getEstanqueDataForCalculation } from "@/lib/store"
 
@@ -196,6 +196,14 @@ export default function Dashboard() {
                   <Button variant="outline" className="w-full bg-white hover:bg-gray-50">
                     <BookOpen className="h-4 w-4 mr-2" />
                     Ver Tutorial de Construcción
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
+
+                <Link href="/rentabilidad">
+                  <Button className="w-full mt-2">
+                    <TrendingUp className="h-4 w-4 mr-2" />
+                    Analizar Rentabilidad
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </Link>

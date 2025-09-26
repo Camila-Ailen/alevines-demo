@@ -6,8 +6,8 @@ export const estanqueData = [
   { id: 2, name: "Codo", detail: "", price: 15200, cant: 3 },
   { id: 3, name: "Caño T", detail: "", price: 2000, cant: 3 },
   { id: 4, name: "Máquina", detail: "Mano de obra subsidiada", price: 120000, cant: 20 },
-  { id: 5, name: "Alevines Pacu", detail: "peces para recria", price: 200, cant: 400 },
-  { id: 6, name: "Alevines Carpa", detail: "peces para recria", price: 150, cant: 400 },
+  { id: 5, name: "Alevines Pacu", detail: "peces para recria", price: 200, cant: 416 },
+  { id: 6, name: "Alevines Carpa", detail: "peces para recria", price: 150, cant: 416 },
 ]
 
 // Medidas estándar de estanques
