@@ -34,7 +34,6 @@ export default function Dashboard() {
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
-            <Fish className="h-8 w-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">Calculadora de Estanques</h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">

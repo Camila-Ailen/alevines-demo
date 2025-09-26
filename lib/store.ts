@@ -2,12 +2,12 @@ import { create } from "zustand"
 
 // Datos de materiales y costos
 export const estanqueData = [
-  { id: 1, name: "Caño", detail: "6 mm", price: 60000, cant: 3 },
-  { id: 2, name: "Codo", detail: "", price: 15200, cant: 3 },
-  { id: 3, name: "Caño T", detail: "", price: 2000, cant: 3 },
-  { id: 4, name: "Máquina", detail: "Mano de obra subsidiada", price: 120000, cant: 20 },
-  { id: 5, name: "Alevines Pacu", detail: "peces para recria", price: 200, cant: 416 },
-  { id: 6, name: "Alevines Carpa", detail: "peces para recria", price: 150, cant: 416 },
+  { id: 1, name: "Caño", detail: "6 mm x 160 mm x 4 mts", price: 70000, cant: 3 },
+  { id: 2, name: "Codo", detail: "6 mm x 160 mm", price: 18000, cant: 3 },
+  { id: 3, name: "Caño T", detail: "6 mm x 160 mm", price: 32000, cant: 3 },
+  { id: 4, name: "Excavación", detail: "Mano de obra subsidiada por municipio", price: 120000, cant: 20 },
+  { id: 5, name: "Alevines Pacu", detail: "Peces para recria", price: 300, cant: 400 },
+  { id: 6, name: "Alevines Carpa", detail: "Peces para recria", price: 280, cant: 400 },
 ]
 
 // Medidas estándar de estanques
