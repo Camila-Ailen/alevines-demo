@@ -75,7 +75,7 @@ const pasosConstruccion = [
       "Caudal: Revisar variaciones de la fuente durante el año (sequías y lluvias)",
       "Temperatura: Controlar cambios estacionales del agua y temperaturas mínimas de 15°C, con el ideal entre 25-30°C",
       "Oxígeno y gases: Mantener adecuada concentración de oxígeno y controlar niveles de gas carbónico",
-      "Parámetros químicos: Vigilar pH, alcalinidad y dureza como indicadores de estabilidad",
+      "Parámetros químicos: Vigilar pH (6,5 - 8), alcalinidad y dureza como indicadores de estabilidad",
       "Contaminación: Prevenir ingreso de agroquímicos, patógenos o efluentes externos. El agua debe ser de un color verde",
     ],
     tiempo: "1 semana",
@@ -243,7 +243,7 @@ export default function Tutorial() {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {consejos.slice(0, 2).map((consejo, idx) => (
+                    {consejos.slice(0, 4).map((consejo, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
                         <span className="text-sm">{consejo}</span>

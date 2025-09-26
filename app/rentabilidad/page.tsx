@@ -10,18 +10,7 @@ import Link from "next/link"
 import { useRentabilidadStore } from "@/lib/rentabilidad-store"
 import { useEstanqueStore } from "@/lib/store"
 import { useEffect } from "react"
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Legend,
-} from "recharts"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
 export default function RentabilidadPage() {
   const { datos, proyecciones, puntoEquilibrio, setDatos, calcularProyecciones, resetDatos } = useRentabilidadStore()
