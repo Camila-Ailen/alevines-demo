@@ -47,19 +47,19 @@ interface RentabilidadStore {
 }
 
 const datosIniciales: DatosRentabilidad = {
-  precioCarpaKg: 3500,
-  precioPacuKg: 4500,
-  costoAlimentoKg: 1200,
+  precioCarpaKg: 10000,
+  precioPacuKg: 10000,
+  costoAlimentoKg: 1150,
   conversionAlimenticia: 2,
-  costoCalCiclo: 50000,
-  duracionCicloMeses: 12,
-  pesoPromedioCarpa: 1.2,
+  costoCalCiclo: 150000,
+  duracionCicloMeses: 24,
+  pesoPromedioCarpa: 3,
   pesoPromedioPacu: 1.5,
   supervivencia: 0.8,
   cantidadEstanques: 1,
   tipoPeces: "carpa",
   inversionInicial: 0,
-  alevinosPorEstanque: 416,
+  alevinosPorEstanque: 400,
 }
 
 export const useRentabilidadStore = create<RentabilidadStore>((set, get) => ({
