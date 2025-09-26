@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Calculator, Wrench, BookOpen, ArrowRight, TrendingUp, Fish, Waves, Target } from "lucide-react"
+import { Calculator, Wrench, BookOpen, ArrowRight, TrendingUp, Target } from "lucide-react"
 import Link from "next/link"
 import { useEstanqueStore, medidasEstandar, tiposPeces, getEstanqueDataForCalculation } from "@/lib/store"
 

@@ -120,7 +120,6 @@ const consejosPorTipoPez = {
 }
 
 export default function Tutorial() {
-  const [selectedPaso, setSelectedPaso] = useState<(typeof pasosConstruccion)[0] | null>(null)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
@@ -156,7 +155,7 @@ export default function Tutorial() {
             </div>
 
             <div className="space-y-4">
-              {pasosConstruccion.map((paso, index) => (
+              {pasosConstruccion.map((paso) => (
                 <Dialog key={paso.id}>
                   <DialogTrigger asChild>
                     <Card className="cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white/90 backdrop-blur-sm border-0 shadow-lg group">
