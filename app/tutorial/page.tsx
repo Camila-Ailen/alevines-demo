@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { ArrowLeft, CheckCircle, AlertTriangle, Info, ExternalLink, Play } from "lucide-react"
+import { ArrowLeft, CheckCircle, AlertTriangle, Info, ExternalLink, Play, ArrowRight, BookOpen } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -75,7 +75,7 @@ const pasosConstruccion = [
       "Caudal: Revisar variaciones de la fuente durante el año (sequías y lluvias)",
       "Temperatura: Controlar cambios estacionales del agua y temperaturas mínimas de 15°C, con el ideal entre 25-30°C",
       "Oxígeno y gases: Mantener adecuada concentración de oxígeno y controlar niveles de gas carbónico",
-      "Parámetros químicos: Vigilar pH (6,5 - 8), alcalinidad y dureza como indicadores de estabilidad",
+      "Parámetros químicos: Vigilar pH, alcalinidad y dureza como indicadores de estabilidad",
       "Contaminación: Prevenir ingreso de agroquímicos, patógenos o efluentes externos. El agua debe ser de un color verde",
     ],
     tiempo: "1 semana",
@@ -108,7 +108,7 @@ const consejosPorTipoPez = {
   carpa: [
     "Las carpas son resistentes a cambios de temperatura",
     "Pueden vivir en aguas con menor oxígeno",
-    "Crecimiento rápido, cosecha en 8-12 meses",
+    "Mayor crecimiento, puede alcanzar hasta 4 kg de peso",
     "Alimentación omnívora, acepta alimento balanceado",
   ],
   pacu: [
@@ -123,156 +123,233 @@ export default function Tutorial() {
   const [selectedPaso, setSelectedPaso] = useState<(typeof pasosConstruccion)[0] | null>(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center gap-4">
-          <Link href="/">
-            <Button variant="outline" size="sm" className="bg-white">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Volver a Calculadora
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Tutorial de Construcción</h1>
-            <p className="text-gray-600">Guía paso a paso para construir estanques de piscicultura</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
+      
+      <div className="relative z-10 p-6">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Enhanced Header */}
+          <div className="flex items-center gap-6">
+            <Link href="/">
+              <Button variant="outline" size="lg" className="bg-white/80 backdrop-blur-sm border-2 border-slate-300 hover:bg-white shadow-lg">
+                <ArrowLeft className="h-5 w-5 mr-2" />
+                Volver a la Calculadora
+              </Button>
+            </Link>
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl shadow-lg">
+                <BookOpen className="h-10 w-10 text-white" />
+              </div>
+              <div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-800 to-cyan-700 bg-clip-text text-transparent">
+                  Tutorial de Construcción
+                </h1>
+                <p className="text-lg text-slate-600 mt-1">Guía paso a paso para construir estanques profesionales</p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Pasos de Construcción - Tarjetas Compactas */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-800">Proceso de Construcción</h2>
+          {/* Enhanced Construction Steps */}
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-slate-800 mb-2">Proceso de Construcción</h2>
+              <p className="text-lg text-slate-600">Sigue estos pasos para construir tu estanque de manera profesional</p>
+            </div>
 
-          <div className="space-y-4">
-            {pasosConstruccion.map((paso) => (
-              <Dialog key={paso.id}>
-                <DialogTrigger asChild>
-                  <Card className="cursor-pointer hover:shadow-lg transition-shadow bg-white border-2 hover:border-blue-300">
-                    <CardHeader className="pb-3">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-bold">
+            <div className="space-y-4">
+              {pasosConstruccion.map((paso, index) => (
+                <Dialog key={paso.id}>
+                  <DialogTrigger asChild>
+                    <Card className="cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white/90 backdrop-blur-sm border-0 shadow-lg group">
+                      <CardHeader className="pb-4">
+                        <div className="flex items-center gap-4 mb-3">
+                          <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-600 to-cyan-600 text-white rounded-2xl text-lg font-bold shadow-lg group-hover:shadow-xl transition-shadow">
+                            {paso.id}
+                          </div>
+                          <div className="flex gap-2">
+                            <Badge 
+                              variant={paso.importancia === "alta" ? "destructive" : "secondary"}
+                              className={paso.importancia === "alta" ? "bg-red-100 text-red-800 border-red-200" : "bg-amber-100 text-amber-800 border-amber-200"}
+                            >
+                              {paso.importancia === "alta" ? "🔥 Crítico" : "⚠️ Importante"}
+                            </Badge>
+                            <Badge variant="outline" className="border-slate-300 text-slate-600">
+                              ⏱️ {paso.tiempo}
+                            </Badge>
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl leading-tight text-slate-800 group-hover:text-blue-700 transition-colors">
+                          {paso.titulo}
+                        </CardTitle>
+                        <CardDescription className="text-base line-clamp-2 text-slate-600">
+                          {paso.descripcion}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-sm text-slate-500">
+                            <CheckCircle className="h-4 w-4 text-green-600" />
+                            <span>{paso.detalles.length} pasos detallados</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-blue-600 font-semibold group-hover:text-blue-700 transition-colors">
+                            <span>Ver detalles</span>
+                            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </DialogTrigger>
+
+                  <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto bg-white">
+                    <DialogHeader className="pb-6">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 text-white rounded-2xl text-2xl font-bold shadow-lg">
                           {paso.id}
                         </div>
-                        <Badge variant={paso.importancia === "alta" ? "destructive" : "secondary"} className="text-xs">
-                          {paso.importancia === "alta" ? "Crítico" : "Importante"}
-                        </Badge>
-                      </div>
-                      <CardTitle className="text-lg leading-tight">{paso.titulo}</CardTitle>
-                      <CardDescription className="text-sm line-clamp-2">{paso.descripcion}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <div className="flex items-center justify-between text-sm text-gray-500">
-                        <span>⏱️ {paso.tiempo}</span>
-                        <span className="text-blue-600 font-medium">Ver detalles →</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </DialogTrigger>
-
-                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                  <DialogHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full text-lg font-bold">
-                        {paso.id}
-                      </div>
-                      <div>
-                        <DialogTitle className="text-xl">{paso.titulo}</DialogTitle>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge variant={paso.importancia === "alta" ? "destructive" : "secondary"}>
-                            {paso.importancia === "alta" ? "Crítico" : "Importante"}
-                          </Badge>
-                          <Badge variant="outline">⏱️ {paso.tiempo}</Badge>
+                        <div className="flex-1">
+                          <DialogTitle className="text-2xl text-slate-800 mb-2">{paso.titulo}</DialogTitle>
+                          <div className="flex items-center gap-3">
+                            <Badge 
+                              variant={paso.importancia === "alta" ? "destructive" : "secondary"}
+                              className={paso.importancia === "alta" ? "bg-red-100 text-red-800 border-red-200" : "bg-amber-100 text-amber-800 border-amber-200"}
+                            >
+                              {paso.importancia === "alta" ? "🔥 Crítico" : "⚠️ Importante"}
+                            </Badge>
+                            <Badge variant="outline" className="border-slate-300 text-slate-600">
+                              ⏱️ {paso.tiempo}
+                            </Badge>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <DialogDescription className="text-base">{paso.descripcionDetallada}</DialogDescription>
-                  </DialogHeader>
+                      <DialogDescription className="text-lg text-slate-600 leading-relaxed">
+                        {paso.descripcionDetallada}
+                      </DialogDescription>
+                    </DialogHeader>
 
-                  <div className="space-y-4">
-                    {/* Imagen Ilustrativa */}
-                    <div className="w-full h-64 bg-gray-100 rounded-lg overflow-hidden">
-                      <img
-                        src={paso.imagen || "/placeholder.svg"}
-                        alt={paso.titulo}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    <div className="space-y-6">
+                      {/* Enhanced Image */}
+                      <div className="w-full h-80 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl overflow-hidden shadow-inner">
+                        <img
+                          src={paso.imagen || "/placeholder.svg?height=320&width=600&query=construccion estanque piscicultura"}
+                          alt={paso.titulo}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
 
-                    {/* Detalles del Paso */}
-                    <div>
-                      <h4 className="font-semibold mb-3 text-gray-800">Pasos detallados:</h4>
-                      <ul className="space-y-2">
-                        {paso.detalles.map((detalle, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{detalle}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                      {/* Enhanced Details */}
+                      <div className="bg-slate-50 rounded-2xl p-6">
+                        <h4 className="font-bold text-lg mb-4 text-slate-800 flex items-center gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          Pasos Detallados
+                        </h4>
+                        <ul className="space-y-3">
+                          {paso.detalles.map((detalle, idx) => (
+                            <li key={idx} className="flex items-start gap-3 p-3 bg-white rounded-xl shadow-sm">
+                              <div className="flex items-center justify-center w-6 h-6 bg-green-100 text-green-700 rounded-full text-sm font-bold mt-0.5 flex-shrink-0">
+                                {idx + 1}
+                              </div>
+                              <span className="text-slate-700 leading-relaxed">{detalle}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                    {/* Link a YouTube */}
-                    <div className="pt-4 border-t">
-                      <Button asChild className="w-full bg-red-600 hover:bg-red-700">
-                        <a href={paso.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                          <Play className="h-4 w-4 mr-2" />
-                          Ver Tutorial en YouTube
-                          <ExternalLink className="h-4 w-4 ml-2" />
-                        </a>
-                      </Button>
+                      {/* Enhanced YouTube Link */}
+                      <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl p-6 border border-red-100">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="p-2 bg-red-600 rounded-lg">
+                            <Play className="h-5 w-5 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-slate-800">Tutorial en Video</h4>
+                            <p className="text-sm text-slate-600">Aprende visualmente con nuestro tutorial paso a paso</p>
+                          </div>
+                        </div>
+                        <Button asChild className="w-full h-12 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                          <a href={paso.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                            <Play className="h-5 w-5 mr-2" />
+                            Ver Tutorial Completo en YouTube
+                            <ExternalLink className="h-5 w-5 ml-2" />
+                          </a>
+                        </Button>
+                      </div>
                     </div>
+                  </DialogContent>
+                </Dialog>
+              ))}
+            </div>
+          </div>
+
+          {/* Enhanced Fish Type Tips */}
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-slate-800 mb-2">Consejos por Tipo de Pez</h2>
+              <p className="text-lg text-slate-600">Recomendaciones específicas según la especie seleccionada</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Object.entries(consejosPorTipoPez).map(([tipo, consejos]) => (
+                <Card key={tipo} className="bg-white/90 backdrop-blur-sm border-0 shadow-xl">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg">
+                        <Info className="h-5 w-5 text-white" />
+                      </div>
+                      <span className="capitalize">
+                        {tipo === 'carpa' ? '🐟 Carpa' : '🐠 Pacu'}
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {consejos.map((consejo, idx) => (
+                        <li key={idx} className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full mt-3 flex-shrink-0" />
+                          <span className="text-slate-700 leading-relaxed">{consejo}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Enhanced Warnings */}
+          <Card className="border-0 bg-gradient-to-r from-amber-50 to-orange-50 shadow-xl">
+            <CardHeader className="pb-6">
+              <CardTitle className="flex items-center gap-3 text-xl text-amber-800">
+                <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg">
+                  <AlertTriangle className="h-6 w-6 text-white" />
+                </div>
+                Advertencias Importantes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-4 bg-white/70 rounded-xl">
+                    <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0" />
+                    <span className="text-amber-800 font-medium">Verificar permisos ambientales antes de iniciar</span>
                   </div>
-                </DialogContent>
-              </Dialog>
-            ))}
-          </div>
+                  <div className="flex items-start gap-3 p-4 bg-white/70 rounded-xl">
+                    <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0" />
+                    <span className="text-amber-800 font-medium">Mantener registro de parámetros de agua</span>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-4 bg-white/70 rounded-xl">
+                    <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0" />
+                    <span className="text-amber-800 font-medium">Plan de contingencia para emergencias</span>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white/70 rounded-xl">
+                    <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0" />
+                    <span className="text-amber-800 font-medium">Protocolo de bioseguridad establecido</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-
-        {/* Consejos por Tipo de Pez - Tarjetas Compactas */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-800">Consejos por Tipo de Pez</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(consejosPorTipoPez).map(([tipo, consejos]) => (
-              <Card key={tipo} className="bg-white">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Info className="h-5 w-5 text-blue-600" />
-                    {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {consejos.slice(0, 4).map((consejo, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
-                        <span className="text-sm">{consejo}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Advertencias Importantes */}
-        <Card className="border-yellow-200 bg-yellow-50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-yellow-800">
-              <AlertTriangle className="h-5 w-5" />
-              Advertencias Importantes
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <ul className="space-y-2 text-sm text-yellow-800">
-              <li>• Verificar permisos ambientales antes de iniciar la construcción</li>
-              <li>• Mantener registro de parámetros de agua durante todo el proceso</li>
-              <li>• Contar con plan de contingencia para cortes de energía o sequías</li>
-              <li>• Establecer protocolo de bioseguridad para prevenir enfermedades</li>
-            </ul>
-          </CardContent>
-        </Card>
       </div>
     </div>
   )
